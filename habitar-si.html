@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jornada Individual Habitar-SI</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #f7f3ee;
+      --warm-white: #fdfaf6;
+      --gold: #c9a96e;
+      --gold-light: #e8d5b0;
+      --dark: #1e1a16;
+      --brown: #5c4a32;
+      --text: #3a2e22;
+      --muted: #8a7560;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--warm-white);
+      color: var(--text);
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-left {
+      background: var(--dark);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 80px 70px 80px 80px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-left::after {
+      content: '';
+      position: absolute;
+      top: 0; right: -60px; bottom: 0;
+      width: 120px;
+      background: var(--dark);
+      clip-path: polygon(0 0, 50% 0, 100% 50%, 50% 100%, 0 100%);
+      z-index: 2;
+    }
+
+    .hero-tag {
+      font-family: 'Jost', sans-serif;
+      font-size: 11px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 32px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.2s;
+    }
+
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(48px, 5vw, 72px);
+      font-weight: 300;
+      line-height: 1.1;
+      color: var(--cream);
+      margin-bottom: 28px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.4s;
+    }
+
+    .hero-title em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .hero-subtitle {
+      font-size: 15px;
+      color: #b0a090;
+      line-height: 1.8;
+      max-width: 380px;
+      margin-bottom: 48px;
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.6s;
+    }
+
+    .hero-cta {
+      opacity: 0;
+      animation: fadeUp 0.8s ease forwards 0.8s;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--gold);
+      color: var(--dark);
+      text-decoration: none;
+      font-family: 'Jost', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 18px 36px;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      background: var(--gold-light);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 40px rgba(201,169,110,0.3);
+    }
+
+    .btn-primary svg { transition: transform 0.3s ease; }
+    .btn-primary:hover svg { transform: translateX(4px); }
+
+    .hero-right {
+      position: relative;
+      background: #c9b8a0;
+      overflow: hidden;
+    }
+
+    .hero-right img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.85;
+      animation: zoomIn 1.2s ease forwards;
+    }
+
+    .hero-right::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(30,26,22,0.3) 0%, transparent 60%);
+      z-index: 1;
+    }
+
+    /* ── PROMISE ── */
+    .promise {
+      padding: 120px 80px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 100px;
+      align-items: center;
+      background: var(--warm-white);
+      position: relative;
+    }
+
+    .promise::before {
+      content: '✦';
+      position: absolute;
+      top: 60px;
+      right: 80px;
+      font-size: 80px;
+      color: var(--gold-light);
+      opacity: 0.5;
+    }
+
+    .promise-image {
+      position: relative;
+    }
+
+    .promise-image img {
+      width: 100%;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      display: block;
+    }
+
+    .promise-image::after {
+      content: '';
+      position: absolute;
+      bottom: -24px;
+      right: -24px;
+      width: 60%;
+      height: 60%;
+      border: 2px solid var(--gold-light);
+      z-index: -1;
+    }
+
+    .section-label {
+      font-size: 11px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(36px, 3.5vw, 52px);
+      font-weight: 400;
+      line-height: 1.2;
+      color: var(--dark);
+      margin-bottom: 28px;
+    }
+
+    .section-title em { font-style: italic; color: var(--brown); }
+
+    .section-text {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.9;
+    }
+
+    .divider {
+      width: 48px;
+      height: 2px;
+      background: var(--gold);
+      margin: 32px 0;
+    }
+
+    /* ── FOR WHOM ── */
+    .for-whom {
+      padding: 120px 80px;
+      background: var(--cream);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .for-whom-header {
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto 80px;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: var(--warm-white);
+      padding: 48px 44px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s ease;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      height: 3px;
+      width: 0;
+      background: var(--gold);
+      transition: width 0.4s ease;
+    }
+
+    .card:hover::before { width: 100%; }
+    .card:hover { background: #fff; transform: translateY(-4px); box-shadow: 0 20px 60px rgba(0,0,0,0.08); }
+
+    .card-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 64px;
+      font-weight: 300;
+      color: var(--gold-light);
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+
+    .card-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 24px;
+      font-weight: 500;
+      color: var(--dark);
+      margin-bottom: 12px;
+    }
+
+    .card-text {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    /* ── WHY ── */
+    .why {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 600px;
+    }
+
+    .why-image {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .why-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(20%);
+    }
+
+    .why-content {
+      background: var(--dark);
+      padding: 100px 80px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .why-content .section-label { color: var(--gold); }
+    .why-content .section-title { color: var(--cream); }
+    .why-content .section-title em { color: var(--gold); }
+    .why-content .divider { background: var(--gold); }
+
+    .blockquote {
+      border-left: 3px solid var(--gold);
+      padding-left: 24px;
+      margin-bottom: 28px;
+    }
+
+    .blockquote p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-style: italic;
+      color: var(--gold-light);
+      line-height: 1.6;
+    }
+
+    .why-body {
+      font-size: 15px;
+      color: #b0a090;
+      line-height: 1.9;
+    }
+
+    /* ── WHAT OFFERS ── */
+    .offers {
+      padding: 120px 80px;
+      background: var(--warm-white);
+    }
+
+    .offers-header {
+      text-align: center;
+      margin-bottom: 80px;
+    }
+
+    .offers-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .offer-card {
+      background: var(--cream);
+      padding: 48px 36px;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .offer-card:hover {
+      background: var(--dark);
+      transform: translateY(-6px);
+      box-shadow: 0 24px 60px rgba(0,0,0,0.15);
+    }
+
+    .offer-card:hover .offer-title,
+    .offer-card:hover .offer-text { color: var(--cream); }
+
+    .offer-card:hover .offer-icon { color: var(--gold); border-color: var(--gold); }
+
+    .offer-icon {
+      width: 52px;
+      height: 52px;
+      border: 1.5px solid var(--gold-light);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+      font-size: 20px;
+      color: var(--brown);
+      transition: all 0.3s ease;
+    }
+
+    .offer-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-weight: 500;
+      color: var(--dark);
+      margin-bottom: 12px;
+      line-height: 1.3;
+      transition: color 0.3s ease;
+    }
+
+    .offer-text {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.8;
+      transition: color 0.3s ease;
+    }
+
+    /* ── MÉTODO ── */
+    .method {
+      padding: 120px 80px;
+      background: var(--cream);
+      text-align: center;
+    }
+
+    .method-header { max-width: 600px; margin: 0 auto 80px; }
+
+    .habitar-letters {
+      display: flex;
+      justify-content: center;
+      gap: 0;
+      flex-wrap: wrap;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .letter-block {
+      padding: 40px 28px;
+      text-align: left;
+      flex: 1;
+      min-width: 120px;
+      position: relative;
+      border-top: 3px solid transparent;
+      transition: all 0.3s ease;
+    }
+
+    .letter-block:hover {
+      border-top-color: var(--gold);
+      background: var(--warm-white);
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.06);
+    }
+
+    .letter-char {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 56px;
+      font-weight: 300;
+      color: var(--gold);
+      line-height: 1;
+      display: block;
+      margin-bottom: 12px;
+    }
+
+    .letter-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 1px;
+      color: var(--dark);
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .letter-desc {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ── ESTRUTURA ── */
+    .structure {
+      padding: 120px 80px;
+      background: var(--dark);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 100px;
+      align-items: center;
+    }
+
+    .structure .section-label { color: var(--gold); }
+    .structure .section-title { color: var(--cream); }
+    .structure .section-title em { color: var(--gold); }
+    .structure .divider { background: var(--gold); }
+
+    .structure-info { color: #a09080; font-size: 15px; margin-bottom: 16px; }
+    .structure-info strong { color: var(--gold-light); }
+
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      position: relative;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 20px;
+      top: 0; bottom: 0;
+      width: 1px;
+      background: var(--brown);
+    }
+
+    .timeline-item {
+      display: flex;
+      gap: 28px;
+      padding: 32px 0;
+      position: relative;
+    }
+
+    .timeline-num {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--gold);
+      color: var(--dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      font-weight: 500;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .timeline-body {}
+
+    .timeline-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 20px;
+      font-weight: 500;
+      color: var(--cream);
+      margin-bottom: 6px;
+    }
+
+    .timeline-text {
+      font-size: 13px;
+      color: #a09080;
+      line-height: 1.7;
+    }
+
+    /* ── MODALIDADES ── */
+    .modalities {
+      padding: 120px 80px;
+      background: var(--warm-white);
+    }
+
+    .modalities-header {
+      text-align: center;
+      margin-bottom: 80px;
+    }
+
+    .plans-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .plan {
+      background: var(--cream);
+      padding: 52px 40px;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .plan.featured {
+      background: var(--dark);
+    }
+
+    .plan.featured .plan-name,
+    .plan.featured .plan-includes,
+    .plan.featured .plan-item { color: var(--cream); }
+    .plan.featured .plan-item::before { background: var(--gold); }
+    .plan.featured .plan-badge { background: var(--gold); color: var(--dark); }
+    .plan.featured .plan-price { color: var(--gold); }
+    .plan.featured .plan-sub { color: #a09080; }
+
+    .plan-badge {
+      display: inline-block;
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      background: var(--gold-light);
+      color: var(--brown);
+      padding: 6px 14px;
+      margin-bottom: 24px;
+    }
+
+    .plan-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 28px;
+      font-weight: 500;
+      color: var(--dark);
+      margin-bottom: 8px;
+    }
+
+    .plan-includes {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 28px;
+    }
+
+    .divider-thin {
+      height: 1px;
+      background: var(--gold-light);
+      margin-bottom: 28px;
+    }
+
+    .plan-item {
+      font-size: 14px;
+      color: var(--text);
+      line-height: 1.6;
+      margin-bottom: 12px;
+      padding-left: 20px;
+      position: relative;
+    }
+
+    .plan-item::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 9px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--gold);
+    }
+
+    .plan-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 36px;
+      font-weight: 300;
+      color: var(--dark);
+      margin-top: 32px;
+    }
+
+    .plan-sub {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    /* ── CTA FINAL ── */
+    .cta-final {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 600px;
+    }
+
+    .cta-image {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .cta-content {
+      background: var(--gold);
+      padding: 100px 80px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .cta-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(36px, 3.5vw, 54px);
+      font-weight: 400;
+      color: var(--dark);
+      line-height: 1.2;
+      margin-bottom: 24px;
+    }
+
+    .cta-text {
+      font-size: 15px;
+      color: rgba(30,26,22,0.75);
+      line-height: 1.9;
+      margin-bottom: 16px;
+    }
+
+    .cta-bold {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--dark);
+      margin-bottom: 48px;
+      line-height: 1.7;
+    }
+
+    .btn-dark {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--dark);
+      color: var(--cream);
+      text-decoration: none;
+      font-family: 'Jost', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 18px 36px;
+      align-self: flex-start;
+      transition: all 0.3s ease;
+    }
+
+    .btn-dark:hover {
+      background: var(--brown);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+    }
+
+    .btn-dark svg { transition: transform 0.3s ease; }
+    .btn-dark:hover svg { transform: translateX(4px); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--dark);
+      padding: 40px 80px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid var(--brown);
+    }
+
+    .footer-brand {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--cream);
+      letter-spacing: 1px;
+    }
+
+    .footer-brand span { color: var(--gold); }
+
+    .footer-copy {
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 1px;
+    }
+
+    /* ── SCROLL REVEAL ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+      from { opacity: 0; transform: translateY(30px); }
+    }
+
+    @keyframes zoomIn {
+      from { transform: scale(1.08); }
+      to { transform: scale(1); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .hero, .promise, .why, .cta-final { grid-template-columns: 1fr; }
+      .hero-left { padding: 60px 32px; min-height: 60vh; }
+      .hero-left::after { display: none; }
+      .hero-right { min-height: 50vh; }
+      .promise, .for-whom, .why-content, .offers, .method, .structure, .modalities { padding: 80px 32px; }
+      .structure { grid-template-columns: 1fr; }
+      .cards-grid, .offers-grid, .plans-grid { grid-template-columns: 1fr; }
+      .habitar-letters { gap: 0; }
+      .letter-block { min-width: 80px; padding: 24px 14px; }
+      .letter-char { font-size: 36px; }
+      .cta-content { padding: 80px 32px; }
+      footer { flex-direction: column; gap: 12px; text-align: center; padding: 40px 32px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-left">
+      <span class="hero-tag">Mentoria Individual</span>
+      <h1 class="hero-title">
+        Jornada<br>
+        <em>Habitar-SI</em>
+      </h1>
+      <p class="hero-subtitle">
+        Mentoria individual para gestantes e puérperas que desejam criar um plano de pós-parto acolhedor, estruturado e transformador.
+      </p>
+      <div class="hero-cta">
+        <a href="https://wa.me/5565998182585" target="_blank" class="btn-primary">
+          Quero Começar
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <img src="https://images.unsplash.com/photo-1609220136736-443140cffec6?w=900&q=85" alt="Gestante serena" />
+    </div>
+  </section>
+
+  <!-- NOSSA PROMESSA -->
+  <section class="promise">
+    <div class="promise-image reveal">
+      <img src="https://images.unsplash.com/photo-1544126592-807ade215a0b?w=700&q=85" alt="Mãe e bebê" />
+    </div>
+    <div class="reveal">
+      <span class="section-label">Nossa Promessa</span>
+      <h2 class="section-title">Criar um plano de pós-parto que acolhe, sustenta e <em>fortalece</em> a nova mulher que nasce com o bebê.</h2>
+      <div class="divider"></div>
+      <p class="section-text">Uma jornada transformadora que prepara você não apenas para o nascimento do seu bebê, mas principalmente para o nascimento de uma nova versão de si mesma.</p>
+    </div>
+  </section>
+
+  <!-- PARA QUEM É -->
+  <section class="for-whom">
+    <div class="for-whom-header reveal">
+      <span class="section-label">Para Quem É Esta Mentoria</span>
+      <h2 class="section-title">Feita para você que está <em>nesta fase</em></h2>
+    </div>
+    <div class="cards-grid">
+      <div class="card reveal">
+        <div class="card-number">01</div>
+        <h3 class="card-title">Mulheres grávidas em diferentes fases da gestação</h3>
+        <p class="card-text">Seja no início ou nos últimos meses, você pode começar a preparar seu pós-parto com consciência e estrutura.</p>
+      </div>
+      <div class="card reveal">
+        <div class="card-number">02</div>
+        <h3 class="card-title">Mães de primeira viagem</h3>
+        <p class="card-text">Navegando as águas desconhecidas da maternidade pela primeira vez, com apoio e estrutura ao seu lado.</p>
+      </div>
+      <div class="card reveal">
+        <div class="card-number">03</div>
+        <h3 class="card-title">Mulheres vivendo o puerpério imediato</h3>
+        <p class="card-text">Atravessando as transformações intensas dos primeiros dias e semanas após o parto.</p>
+      </div>
+      <div class="card reveal">
+        <div class="card-number">04</div>
+        <h3 class="card-title">Mulheres que desejam habitar esse novo ciclo</h3>
+        <p class="card-text">Com mais consciência, presença e menos solidão nesta fase tão transformadora da vida.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- POR QUE É O DIFERENCIAL -->
+  <section class="why">
+    <div class="why-image">
+      <img src="https://images.unsplash.com/photo-1531983412531-1f49a365ffed?w=800&q=85" alt="Mulher em transformação" />
+    </div>
+    <div class="why-content">
+      <span class="section-label">Por Que É o Diferencial</span>
+      <h2 class="section-title">Por Que o Plano de Pós-Parto É <em>Essencial?</em></h2>
+      <div class="divider"></div>
+      <div class="blockquote">
+        <p>A maioria das mulheres se prepara para o parto, mas não para o depois — e é justamente no depois que a nova mulher precisa nascer com estrutura.</p>
+      </div>
+      <p class="why-body">O puerpério é um período de vulnerabilidade intensa, transformações profundas e adaptações constantes. Ter um plano estruturado faz toda a diferença entre viver esse momento com acolhimento ou se sentir perdida e sobrecarregada.</p>
+    </div>
+  </section>
+
+  <!-- O QUE OFERECE -->
+  <section class="offers">
+    <div class="offers-header reveal">
+      <span class="section-label">O Que a Jornada Oferece</span>
+      <h2 class="section-title">Um cuidado <em>completo</em> para esta fase</h2>
+    </div>
+    <div class="offers-grid">
+      <div class="offer-card reveal">
+        <div class="offer-icon">🌿</div>
+        <h3 class="offer-title">Acolhe a vulnerabilidade emocional e física</h3>
+        <p class="offer-text">Reconhecemos e honramos as transformações intensas que você está vivendo, criando espaço para todas as emoções.</p>
+      </div>
+      <div class="offer-card reveal">
+        <div class="offer-icon">✦</div>
+        <h3 class="offer-title">Fortalece a identidade da mulher que está emergindo</h3>
+        <p class="offer-text">Apoiamos o nascimento da nova versão de você, integrando quem você foi com quem está se tornando.</p>
+      </div>
+      <div class="offer-card reveal">
+        <div class="offer-icon">🤝</div>
+        <h3 class="offer-title">Cria acordos práticos com parceiro, familiares e visitas</h3>
+        <p class="offer-text">Estabelecemos combinados claros que protegem seu tempo, energia e necessidades neste momento delicado.</p>
+      </div>
+      <div class="offer-card reveal">
+        <div class="offer-icon">🏡</div>
+        <h3 class="offer-title">Organiza a casa como apoio e não sobrecarga</h3>
+        <p class="offer-text">Transformamos seu ambiente doméstico em um espaço que sustenta e acolhe, eliminando fontes de estresse desnecessário.</p>
+      </div>
+      <div class="offer-card reveal">
+        <div class="offer-icon">🌊</div>
+        <h3 class="offer-title">Prepara emocionalmente para os ciclos de transição</h3>
+        <p class="offer-text">Desenvolvemos recursos internos para navegar as ondas de mudança com mais equilíbrio e compreensão.</p>
+      </div>
+      <div class="offer-card reveal">
+        <div class="offer-icon">💬</div>
+        <h3 class="offer-title">Promove posicionamento com autonomia e suavidade</h3>
+        <p class="offer-text">Aprendemos a comunicar limites e necessidades de forma clara, respeitosa e assertiva.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- MÉTODO HABITAR-SI -->
+  <section class="method">
+    <div class="method-header reveal">
+      <span class="section-label">O Método</span>
+      <h2 class="section-title">Movimentos do <em>HABITAR-SI</em></h2>
+      <p class="section-text" style="margin-top:16px;">Um método cuidadosamente desenvolvido para acompanhar cada aspecto da sua jornada no pós-parto, integrando dimensões emocionais, práticas, relacionais e existenciais.</p>
+    </div>
+    <div class="habitar-letters reveal">
+      <div class="letter-block">
+        <span class="letter-char">H</span>
+        <span class="letter-label">Honrar</span>
+        <span class="letter-desc">Honrar o corpo que gesta</span>
+      </div>
+      <div class="letter-block">
+        <span class="letter-char">A</span>
+        <span class="letter-label">Acolher</span>
+        <span class="letter-desc">Acolher a experiência que interna</span>
+      </div>
+      <div class="letter-block">
+        <span class="letter-char">B</span>
+        <span class="letter-label">Base</span>
+        <span class="letter-desc">Base da casa como bem-estar essencial</span>
+      </div>
+      <div class="letter-block">
+        <span class="letter-char">I</span>
+        <span class="letter-label">Integrar</span>
+        <span class="letter-desc">Integração do ambiente com intenção</span>
+      </div>
+      <div class="letter-block">
+        <span class="letter-char">T</span>
+        <span class="letter-label">Tecer</span>
+        <span class="letter-desc">Tecer conexões afetivas</span>
+      </div>
+      <div class="letter-block">
+        <span class="letter-char">A</span>
+        <span class="letter-label">Alinhar</span>
+        <span class="letter-desc">Alinhar expectativas e limites</span>
+      </div>
+      <div class="letter-block">
+        <span class="letter-char">R</span>
+        <span class="letter-label">Reconhecer</span>
+        <span class="letter-desc">Reconhecer a mulher que vai nascer</span>
+      </div>
+      <div class="letter-block">
+        <span class="letter-char">SI</span>
+        <span class="letter-label">Ser Inteira</span>
+        <span class="letter-desc">Ser Inteira em cada fase</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ESTRUTURA DA MENTORIA -->
+  <section class="structure">
+    <div class="reveal">
+      <span class="section-label">Estrutura da Mentoria</span>
+      <h2 class="section-title">Como <em>funciona</em> a jornada</h2>
+      <div class="divider"></div>
+      <p class="structure-info"><strong>10 encontros</strong> semanais ou quinzenais</p>
+      <p class="structure-info"><strong>Formato:</strong> Online</p>
+    </div>
+    <div class="timeline reveal">
+      <div class="timeline-item">
+        <div class="timeline-num">1</div>
+        <div class="timeline-body">
+          <div class="timeline-title">Encontro 1 — Acolhimento</div>
+          <p class="timeline-text">Acolhimento e alinhamento de expectativas. Criamos juntas o mapa da sua jornada.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-num">2</div>
+        <div class="timeline-body">
+          <div class="timeline-title">Encontros 2 a 9 — Método HABITAR-SI</div>
+          <p class="timeline-text">Harmonia, Acolhimento, Base, Integração, Tempo, Autonomia, Relações e Ser Inteira — um módulo para cada dimensão da sua vida.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-num">3</div>
+        <div class="timeline-body">
+          <div class="timeline-title">Encontro 10 — Conclusão</div>
+          <p class="timeline-text">Conclusão e checklist final do seu plano de pós-parto personalizado, pronto para ser vivido.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MODALIDADES -->
+  <section class="modalities">
+    <div class="modalities-header reveal">
+      <span class="section-label">Modalidades</span>
+      <h2 class="section-title">Escolha o nível de <em>suporte</em> ideal para você</h2>
+    </div>
+    <div class="plans-grid">
+      <!-- Individual -->
+      <div class="plan reveal">
+        <div class="plan-badge">Essencial</div>
+        <div class="plan-name">Habitar-SI Individual</div>
+        <div class="plan-includes">A base completa da jornada</div>
+        <div class="divider-thin"></div>
+        <div class="plan-item">10 encontros personalizados</div>
+        <div class="plan-item">Suporte via WhatsApp</div>
+        <div class="plan-item">Acesso ao Plano Pós-Parto Canvas</div>
+        <div class="plan-item">Bônus: e-book, meditações e checklist</div>
+        <div class="plan-price">Sob consulta</div>
+        <div class="plan-sub">Entre em contato para valores</div>
+      </div>
+
+      <!-- Premium -->
+      <div class="plan featured reveal">
+        <div class="plan-badge">Mais Completo</div>
+        <div class="plan-name">Habitar-SI Premium</div>
+        <div class="plan-includes">Tudo da versão Individual +</div>
+        <div class="divider-thin"></div>
+        <div class="plan-item">Acompanhamento personalizado durante o puerpério</div>
+        <div class="plan-item">Sessão extra de escuta e orientação após o nascimento</div>
+        <div class="plan-item">Bônus especiais exclusivos</div>
+        <div class="plan-price">Sob consulta</div>
+        <div class="plan-sub">Entre em contato para valores</div>
+      </div>
+
+      <!-- Ultra -->
+      <div class="plan reveal">
+        <div class="plan-badge">Imersivo</div>
+        <div class="plan-name">Habitar-SI Ultra</div>
+        <div class="plan-includes">Tudo da versão Premium +</div>
+        <div class="divider-thin"></div>
+        <div class="plan-item">Arquitetura neuroemocional do ambiente da casa</div>
+        <div class="plan-item">Sessão exclusiva com parceiro(a) ou rede de apoio</div>
+        <div class="plan-item">Ferramentas para reorganização física e energética do espaço</div>
+        <div class="plan-item">Suporte estendido via WhatsApp</div>
+        <div class="plan-price">Sob consulta</div>
+        <div class="plan-sub">Entre em contato para valores</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA FINAL -->
+  <section class="cta-final">
+    <div class="cta-image">
+      <img src="https://images.unsplash.com/photo-1476703993599-0035a21b17a9?w=800&q=85" alt="Mãe com bebê" />
+    </div>
+    <div class="cta-content">
+      <h2 class="cta-title">Pronta para habitar esta nova versão de si?</h2>
+      <p class="cta-text">A jornada da maternidade é uma das transformações mais profundas que uma mulher pode viver. Não atravesse esse caminho sozinha.</p>
+      <p class="cta-bold">Este é o momento de criar as bases para um pós-parto consciente, acolhedor e transformador.</p>
+      <a href="https://wa.me/5565998182585" target="_blank" class="btn-dark">
+        Fale pelo WhatsApp
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+    </div>
+  </section>
+  
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-brand">Habitar<span>-SI</span></div>
+    <div class="footer-copy">Mentoria Individual · Pós-Parto Consciente</div>
+  </footer>
+
+  <script>
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => entry.target.classList.add('visible'), i * 80);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    reveals.forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
